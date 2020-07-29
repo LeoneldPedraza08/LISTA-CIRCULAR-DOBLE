@@ -1,0 +1,256 @@
+package Clases;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Fabrissio
+ */
+public class CListaCircularD {
+
+    static Scanner entrada = new Scanner(System.in);
+    private CNodoD cabeza;
+    private CNodoD cola;
+    private int tope;
+
+    public CListaCircularD() {
+        cabeza = null;
+        cola = null;
+        tope = 0;
+    }
+
+    public boolean estaVacio() {
+        return cabeza == null;
+    }
+
+    public void insertarInicio(int valor) {
+        CNodoD nuevo = new CNodoD();
+        nuevo.setDato(valor);
+        if (estaVacio()) {
+            cabeza = nuevo;
+            cola = nuevo;
+            System.out.println("Dato insertado al inicio...");
+        } else {
+            cabeza.setAnterior(nuevo);
+            nuevo.setSiguiente(cabeza);
+            cabeza = nuevo;
+            System.out.println("Dato insertado al inicio...");
+        }
+        cola.setSiguiente(cabeza);
+        cabeza.setAnterior(cola);
+        tope++;
+    }
+
+    public void insertarFinal(int valor) {
+        CNodoD nuevo = new CNodoD();
+        nuevo.setDato(valor);
+        if (!estaVacio()) {
+            CNodoD aux = cabeza;
+            while (aux.getSiguiente() != cabeza) {
+                aux = aux.getSiguiente();
+            }
+            aux.setSiguiente(nuevo);
+            cola = nuevo;
+        } else {
+            System.out.print("La lista esta vacia...");
+        }
+        cola.setSiguiente(cabeza);
+        cabeza.setAnterior(cola);
+        tope++;
+    }
+
+    public void mostrarDatos() {
+        if (!estaVacio()) {
+            CNodoD aux = cabeza;
+            do {
+                System.out.print(" [" + aux.getDato() + "] " + " --> ");
+                aux = aux.getSiguiente();
+            } while (aux != cabeza);
+        } else {
+            System.out.print("La lista esta vacio...");
+        }
+    }
+
+    public void ingresarInsercionDespues(int valor) {
+        if (estaVacio()) {
+            System.out.print("La lista esta vacio...");
+        } else {
+            CNodoD aux = cabeza;
+            do {
+                if (aux.getDato() == valor) {
+                    //SE CREA UN NUEVO NODO,PARA INGRESAR UN NUEVO DATO A LA LISTA
+                    int nValor;
+                    CNodoD nuevo = new CNodoD();
+                    System.out.print("Ingrese nuevo numero: ");
+                    nValor = entrada.nextInt();
+                    nuevo.setDato(nValor);
+                    //---------------------
+                    //EL NUEVO NODO SERA PUESTO DESPUES DEL NODO QUE SE BUSCO ANTERIORMENTE
+                    CNodoD aux1 = aux.getSiguiente();
+                    aux.setSiguiente(nuevo);
+                    nuevo.setAnterior(aux);
+                    nuevo.setSiguiente(aux1);
+                    aux1.setAnterior(nuevo);
+                    System.out.println("=============================");
+                    System.out.println("La insercion fue un EXITO...");
+                    System.out.println("=============================");
+                }
+                aux = aux.getSiguiente();
+            } while (aux != cabeza);
+        }
+        tope++;
+    }
+
+    public void buscarDatos(int valor) {
+        if (!estaVacio()) {
+            CNodoD aux = cabeza;
+            do {
+                int cont = 0;
+                if (aux.getDato() == valor) {
+                    System.out.print(" [" + aux.getDato() + "] " + " --> ");
+                    System.out.println("");
+                    System.out.println("Se encuentra en la posicion: " + cont);
+                }
+                cont++;
+                aux = aux.getSiguiente();
+            } while (aux != cabeza);
+        } else {
+            System.out.print("La lista esta vacio...");
+        }
+    }
+
+    public void eliminarInicio() {
+        if (estaVacio()) {
+            System.out.println("La lista esta vacio...");
+        } else {
+            cabeza = cabeza.getSiguiente();
+            System.out.println("Se elimino dato inicial...");
+        }
+        cola.setSiguiente(cabeza);
+        cabeza.setAnterior(cola);
+        tope--;
+    }
+
+    public void eliminarFinal() {
+        if (!estaVacio()) {
+            CNodoD aux = cabeza;
+            do {
+                if (aux.getSiguiente() == cola) {
+                    cola = cola.getAnterior();
+                    cola.setSiguiente(cabeza);
+                    System.out.println("Dato final eliminado...");
+                }
+                aux = aux.getSiguiente();
+            } while (aux != cabeza);
+        } else {
+            System.out.print("La lista esta vacio...");
+        }
+        cabeza.setAnterior(cola);
+        tope--;
+    }
+
+    public void eliminarXInsercionDespues(int valor) {
+        if (estaVacio()) {
+            System.out.print("La lista esta vacio...");
+        } else {
+            CNodoD aux = cabeza;
+            do {
+                if (aux.getDato() == valor) {
+                    CNodoD aux1 = aux.getSiguiente();
+                    aux.setSiguiente(aux1.getSiguiente());
+                    aux1.setAnterior(aux);
+                    System.out.println("=============================");
+                    System.out.println("La eliminacion fue un EXITO...");
+                    System.out.println("=============================");
+                }
+                aux = aux.getSiguiente();
+            } while (aux != cabeza);
+        }
+        tope--;
+    }
+
+    public void ordenarLista() {
+        CNodoD aux = cabeza;
+        CNodoD aux1 = cabeza;
+        int temp;
+        while (aux.getSiguiente() != cabeza) {
+            aux1 = aux.getSiguiente();
+            while (aux1 != cabeza) {
+                if (aux1.getDato() < aux.getDato()) {
+                    temp = aux.getDato();
+                    aux.setDato(aux1.getDato());
+                    aux1.setDato(temp);
+                }
+                aux1 = aux1.getSiguiente();
+            }
+            aux = aux.getSiguiente();
+        }
+    }
+
+    public void modificarDato(int valor) {
+        if (!estaVacio()) {
+            CNodoD aux = cabeza;
+            do {
+                if (aux.getDato() == valor) {
+                    int nValor;
+                    System.out.print("Ingrese nuevo numero: ");
+                    nValor = entrada.nextInt();
+                    System.out.println("Cambio EXITOSO...");
+                    aux.setDato(nValor);
+                }
+                aux = aux.getSiguiente();
+            } while (aux != cabeza);
+
+        } else {
+            System.out.print("La lista esta vacio...");
+        }
+    }
+
+    public int tamanoLista() {
+        System.out.println("Tamaño de la lista es: " + tope);
+        return tope;
+    }
+
+    public void intercambiarMayorUltimo() {
+        CNodoD aux = cabeza;
+        int nMayor = 0;
+        while (aux.getSiguiente() != cabeza) {
+            if (nMayor < aux.getDato()) {
+                nMayor = aux.getDato();
+            }
+            aux = aux.getSiguiente();
+        }
+        CNodoD aux1 = cabeza;
+        while (aux1.getSiguiente() != cabeza) {
+            if (aux1.getDato() == nMayor) {
+                aux1.setDato(cola.getDato());
+                cola.setDato(nMayor);
+            }
+            aux1 = aux1.getSiguiente();
+        }
+        System.out.println("El dato mayor es: " + nMayor);
+        System.out.println("Intercambio realizado...");
+    }
+
+    public void intercambiarMenorPrimero() {
+        CNodoD aux = cabeza;
+        int nMenor = 1000;
+        do {
+            if (nMenor > aux.getDato()) {
+                nMenor = aux.getDato();
+            }
+            aux = aux.getSiguiente();
+        } while (aux != cabeza);
+        CNodoD aux1 = cabeza;
+        do {
+            if (aux1.getDato() == nMenor) {
+                aux1.setDato(cabeza.getDato());
+                cabeza.setDato(nMenor);
+            }
+            aux1 = aux1.getSiguiente();
+        } while (aux1 != cabeza);
+        System.out.println("El dato menor es: " + nMenor);
+        System.out.println("Intercambio realizado...");
+    }
+
+}
