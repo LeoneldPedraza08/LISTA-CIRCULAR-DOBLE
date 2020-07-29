@@ -1,0 +1,146 @@
+package Clases;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author USUARIO
+ */
+public class AplicaListaCircularD {
+
+    static Scanner entrada = new Scanner(System.in);
+    static CListaCircularD lista = new CListaCircularD();
+
+    public static void main(String[] args) {
+        menu();
+    }
+
+    static void menu() {
+        int opcion;
+        do {
+            System.out.println("\nMenu de Opciones");
+            System.out.println("================");
+            System.out.println("[1] Ingresar Datos al Inicio");
+            System.out.println("[2] Ingresar Datos al Final");
+            System.out.println("[3] Mostrar Datos");
+            System.out.println("[4] Ingresar Dato Por Insercion DESPUES");
+            System.out.println("[5] Buscar Datos");
+            System.out.println("[6] Eliminar Inicio");
+            System.out.println("[7] Eliminar Final");
+            System.out.println("[8] Eliminar Por Insercion (DESPUES)");
+            System.out.println("[9] Ordenar Lista");
+            System.out.println("[10] Modificar Dato");
+            System.out.println("[11] Tamaño de la lista");
+            System.out.println("[12] Intercambiar Mayor a Ultimo");
+            System.out.println("[13] Intercambiar Menor a Primero");
+
+            System.out.println("=============");
+            System.out.println("[0] Salir");
+
+            System.out.print("Ingrese una opcion: ");
+            opcion = entrada.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    ingresarInicio();
+                    break;
+
+                case 2:
+                    ingresarFinal();
+                    break;
+
+                case 3:
+                    lista.mostrarDatos();
+                    break;
+
+                case 4:
+                    insertarInsercionDespues();
+                    break;
+
+                case 5:
+                    buscarDatos();
+                    break;
+
+                case 6:
+                    lista.eliminarInicio();
+                    break;
+
+                case 7:
+                    lista.eliminarFinal();
+                    break;
+
+                case 8:
+                    eliminarInsercionDespues();
+                    break;
+
+                case 9:
+                    lista.ordenarLista();
+                    break;
+
+                case 10:
+                    modificarDatos();
+                    break;
+                
+                case 11:
+                    lista.tamanoLista();
+                    break;
+                    
+                case 12:
+                    lista.intercambiarMayorUltimo();
+                    break;
+                    
+                case 13:
+                    lista.intercambiarMenorPrimero();
+                    break;
+
+                case 0:
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("Ingrese otra opcion...");
+            }
+
+        } while (opcion != 0);
+
+    }
+
+    static void ingresarInicio() {
+        System.out.print("Ingrese un numero: ");
+        int num = entrada.nextInt();
+        lista.insertarInicio(num);
+    }
+
+    static void ingresarFinal() {
+        System.out.print("Ingrese un numero: ");
+        int num = entrada.nextInt();
+        lista.insertarFinal(num);
+    }
+
+    static void insertarInsercionDespues() {
+        System.out.println("Se insertara elemento despues, del siguiente dato");
+        System.out.print("Ingrese numero a buscar: ");
+        int num = entrada.nextInt();
+        lista.ingresarInsercionDespues(num);
+    }
+
+    static void buscarDatos() {
+        System.out.print("Ingrese numero a buscar: ");
+        int num = entrada.nextInt();
+        lista.buscarDatos(num);
+    }
+
+    static void eliminarInsercionDespues() {
+        System.out.println("Se eliminara elemento despues, del siguiente dato");
+        System.out.print("Ingrese numero a buscar: ");
+        int num = entrada.nextInt();
+        lista.eliminarXInsercionDespues(num);
+    }
+
+    static void modificarDatos() {
+        System.out.print("Ingrese numero a buscar: ");
+        int num = entrada.nextInt();
+        lista.modificarDato(num);
+    }
+
+}
